@@ -1,0 +1,32 @@
+{% extends 'myapp/header.html' %}
+{% block content %}
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>	
+</head>
+<body>
+{% if error %}
+	<center><b>{{error}}</b></center>
+{% endif %}
+	<form name="verify_otp" method="post" action="{% url 'verify_email' %}">
+		{% csrf_token %}
+		<table align="center">
+
+			
+			<tr>
+				<td>Enter Email</td>
+				<td><input type="text" name="email" required="required"></td>
+			</tr>
+			
+			<tr>
+				<td colspan="2" align="center">
+					<input type="submit" value="Send OTP">
+				</td>
+			</tr>
+		</table>
+	</form>
+
+{% endblock %}
+</body>
+</html>

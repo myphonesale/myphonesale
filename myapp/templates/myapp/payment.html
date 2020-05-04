@@ -1,0 +1,24 @@
+{% extends 'myapp/header.html' %}
+{% block content %}
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>	
+</head>
+<body>
+<h2>Buy for Rs. {{finalPrice}}</h2>
+<form action="{% url 'index' %}" method="post">
+  {% csrf_token %}
+  <input type="hidden" name="success" value="success">
+  <input type="hidden" name="finalPrice" value="{{finalPrice}}">
+<script src="https://checkout.stripe.com/checkout.js" class="stripe-button"
+    data-key="{{ key }}"
+    data-description="Final Price To Pay"
+    data-amount={{finalPrice1}}
+    data-locale="auto"
+    data-currency="inr">
+</script>
+</form>
+{% endblock %}
+</body>
+</html>

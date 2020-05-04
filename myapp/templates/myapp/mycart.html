@@ -1,0 +1,43 @@
+{% extends 'myapp/header.html' %}
+{% block content %}
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>	
+	{% if success %}
+	<script type="text/javascript">
+		alert("Payment Successfull");
+	</script>
+	{% endif %}
+</head>
+<body>
+	<center>
+		<h1>Total Item In Cart : {{carts.count}}</h1>
+
+	</center>
+	<div class="row">
+		 {% for s in carts %}
+		<div id="box" class="col-sm-4">
+			<div class="container">
+		  		<div class="card" style="width:250px">
+		    		<img class="card-img-top" src="{{s.phone.image.url}}" alt="Card image" width=250px height=250px>
+		    			<div class="card-body">
+		      				<h4 class="card-title">Model : {{s.phone.model}}</h4>
+		      				<p class="card-text">Price : {{s.phone.price}}</p>
+		      				<p class="card-text">Date : {{s.date}}</p>
+		      				<a href="{% url 'remove_cart' pk=s.pk %}">Remove</a>
+		    			</div>
+		  		</div>	  
+			</div>
+		</div> 
+	    {% endfor %}
+	</div>
+	<form method="post" action="{% url 'payment' %}">
+			{% csrf_token %}
+			Total Amount Payable : {{finalPrice}}
+			<input type="hidden" name="finalPrice" value="{{finalPrice}}">
+			<input type="submit" value="Buy">
+	</form>
+{% endblock %}
+</body>
+</html>

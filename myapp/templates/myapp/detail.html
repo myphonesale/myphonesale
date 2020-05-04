@@ -1,0 +1,61 @@
+{% extends 'myapp/header.html' %}
+{% block content %}
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>	
+</head>
+<body>
+	<div class="row">
+		 
+		<div id="box" class="col-sm-4">
+			<div class="container">
+		  		<div class="card" style="width:250px">
+		    		<img class="card-img-top" src="{{phone.image.url}}" alt="Card image" width=250px height=250px>
+		    			<div class="card-body">
+		      				<h4 class="card-title">{{phone.model}}</h4>
+		      				<p class="card-text"><b>Price : </b>{{phone.price}}</p>
+		      				<p class="card-text"><b>Specification : </b>{{phone.specification}}</p>
+		      				 {% if request.session.fname %}
+			      				<a href="{% url 'add_to_cart' pk1=request.session.userpk pk2=phone.pk %}">Add To Cart</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+			      				<a href="{% url 'feedback' pk1=request.session.userpk pk2=phone.pk %}">Feedback</a>
+		      				{% else %}
+		      					<a href="{% url 'login' %}">Login</a>
+		      				{% endif %}
+		    			</div>
+		  		</div>	  
+			</div>
+		</div> 
+	    
+	</div>
+	{% if flag is True %}
+
+		<form name="feedback" method="post" action="{% url 'submit_feedback' pk1=request.session.userpk pk2=phone.pk %}">
+			{% csrf_token %}
+			<table>
+				
+				<tr>
+					<td>Give Your Feedback</td>
+					<td><textarea rows="5" cols="21" name="feedback"></textarea></td>
+				</tr>
+				<tr>
+					<td colspan="2" align="center">
+						<input type="submit" value="Submit">
+					</td>
+				</tr>
+			</table>
+		</form>
+	{% endif %}
+	<hr>
+	{% if reviews %}
+		<h1>Reviews Given By Different Users</h1><br><br><hr>
+		{% for i in reviews %}
+			<b>{{i.user.fname}}</b> : {{i.feedback}} <br> Date : {{i.date}}
+			<br><br><hr>
+		{% endfor %}
+	{% else %}
+		<h3>No Reviews Yet</h3>
+	{% endif %}
+{% endblock %}
+</body>
+</html>

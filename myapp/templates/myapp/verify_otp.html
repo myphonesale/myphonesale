@@ -1,0 +1,51 @@
+{% extends 'myapp/header.html' %}
+{% block content %}
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>	
+</head>
+<body>
+{% if error %}
+	<center><b>{{error}}</b></center>
+{% endif %}
+	<form name="verify_otp" method="post" action="{% url 'verify_otp' %}">
+		{% csrf_token %}
+		<table align="center">
+
+			<tr>
+				<td><input type="hidden" name="otp" value={{otp}}></td>
+			</tr>
+			<tr>
+				<td><input type="hidden" name="email" value={{email}}></td>
+			</tr>
+			<tr>
+				<td>Enter OTP</td>
+				<td><input type="text" name="uotp" required="required"></td>
+			</tr>
+			{% ifequal task "signup" %}
+				<tr>
+					<td><input type="hidden" name="task" value="signup"></td>
+				</tr>
+				<tr>
+					<td colspan="2" align="center">
+						<input type="submit" value="Verify Signup">
+					</td>
+				</tr>
+			{% else %}
+				<tr>
+					<td><input type="hidden" name="task" value="forgot"></td>
+				</tr>
+				<tr>
+					<td colspan="2" align="center">
+						<input type="submit" value="Verify Forgot">
+					</td>
+				</tr>
+			{% endifequal %}
+			
+		</table>
+	</form>
+
+{% endblock %}
+</body>
+</html>
