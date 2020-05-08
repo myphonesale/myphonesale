@@ -6,15 +6,14 @@ from django.conf import settings
 from django.views.generic.base import TemplateView
 from django.conf import settings
 from django.http import *
-import stripe
 from django.utils import timezone
-stripe.api_key = settings.STRIPE_SECRET_KEY
+#stripe.api_key = settings.STRIPE_SECRET_KEY
 # Create your views here.
 def index(request):
 	finalPrice=0
 	if request.method=="POST":
 		finalPrice=request.POST['finalPrice']
-		charge = stripe.Charge.create(amount=finalPrice,currency='inr',description='Product Charge',source=request.POST['stripeToken'])
+		#charge = stripe.Charge.create(amount=finalPrice,currency='inr',description='Product Charge',source=request.POST['stripeToken'])
 		success=request.POST['success']
 		user=User.objects.get(pk=request.session['userpk'])
 		carts=Cart.objects.filter(user=user)
